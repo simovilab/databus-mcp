@@ -1,4 +1,4 @@
-# DataBus MCP
+# Databus MCP
 
 **Databus MCP** is a Model Context Protocol (MCP) server that enables AI assistants and chatbots to access public transportation operational data through standardized interfaces.
 
@@ -10,7 +10,7 @@ It provides structured tools for:
 - Statistical indicators  
 - Real-time and near real-time transit data  
 
-The goal of DataBus MCP is to expose transit data in a modular, AI-friendly format for operators, regulators, and intelligent systems.
+The goal of Databus MCP is to expose transit data in a modular, AI-friendly format for operators, regulators, and intelligent systems.
 
 ---
 ## Repository Structure
