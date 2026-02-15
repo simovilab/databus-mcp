@@ -18,6 +18,81 @@ It focuses on operational visibility, performance analysis, and fleet supervisio
 
 ---
 
+## Setup Notes
+
+### Databus configuration
+- MCP tools are implemented based on the models up to commit `bb5e4e537005dbdc35b70ca33990205d26d00dd1` in the [Databus repository](https://github.com/simovilab/databus).
+- Inspect with `git show bb5e4e537005dbdc35b70ca33990205d26d00dd1`.
+
+- Generate the .env file as described in [databus/HOWTO.md](https://github.com/simovilab/databus/blob/main/HOWTO.md).
+
+- The compose file [compose.dev.yml](https://github.com/simovilab/databus/blob/main/compose.dev.yml) needs adjustments; a working reference is [databus_config/compose.dev.yml](databus_config/compose.dev.yml).
+
+- Run the dev stack on databus root: 
+
+```bash
+./scripts/dev.sh
+```
+
+#### API Endpoints
+
+The API root is available at http://localhost:8000/api/ and returns the list of resources.
+
+Example response:
+
+```json
+{
+	"company": "http://localhost:8000/api/company/",
+	"operator": "http://localhost:8000/api/operator/",
+	"data-provider": "http://localhost:8000/api/data-provider/",
+	"vehicle": "http://localhost:8000/api/vehicle/",
+	"equipment": "http://localhost:8000/api/equipment/",
+	"equipment-log": "http://localhost:8000/api/equipment-log/",
+	"run": "http://localhost:8000/api/run/",
+	"position": "http://localhost:8000/api/position/",
+	"progression": "http://localhost:8000/api/progression/",
+	"occupancy": "http://localhost:8000/api/occupancy/",
+	"agency": "http://localhost:8000/api/agency/",
+	"stops": "http://localhost:8000/api/stops/",
+	"geo-stops": "http://localhost:8000/api/geo-stops/",
+	"shapes": "http://localhost:8000/api/shapes/",
+	"geo-shapes": "http://localhost:8000/api/geo-shapes/",
+	"routes": "http://localhost:8000/api/routes/",
+	"calendars": "http://localhost:8000/api/calendars/",
+	"calendar-dates": "http://localhost:8000/api/calendar-dates/",
+	"trips": "http://localhost:8000/api/trips/",
+	"stop-times": "http://localhost:8000/api/stop-times/",
+	"fare-attributes": "http://localhost:8000/api/fare-attributes/",
+	"fare-rules": "http://localhost:8000/api/fare-rules/",
+	"feed-info": "http://localhost:8000/api/feed-info/"
+}
+```
+
+#### Sample Data Fixture
+
+Some endpoints do not include sample data by default. To load the fixture:
+
+1. Copy feed_sample_data.json into [databus/backend/feed/fixtures/](https://github.com/simovilab/databus/tree/main/backend/feed/fixtures).
+2. From the repository root, run:
+
+```bash
+docker compose -f compose.dev.yml exec backend uv run python manage.py loaddata feed_sample_data.json
+```
+
+#### Realtime Feed Outputs
+
+The publisher generates realtime feed files at:
+
+| File | Name |
+| --- | --- |
+| feed/realtime/vehicle_positions.json | vehicle_json |
+| feed/realtime/vehicle_positions.pb | vehicle_pb |
+| feed/realtime/trip_updates.json | trip_updates_json |
+| feed/realtime/trip_updates.pb | trip_updates_pb |
+
+For realtime data simulation, see [scripts/README.md](https://github.com/simovilab/databus/blob/main/scripts/README.md).
+
+--- 
 ## Vehicles
 
 Provides real-time and structural visibility over the vehicle fleet.
