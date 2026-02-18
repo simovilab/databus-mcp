@@ -101,12 +101,13 @@ Provides real-time and structural visibility over the vehicle fleet.
 
 | Tool Name | Description | Implemented |
 |------------|------------|------------|
-| `vehicles_list_by_company` | Returns the full fleet inventory for a specific company. | No |
+| `vehicles_list_by_company` | Returns the full fleet inventory for a specific company. | Yes |
 | `vehicles_list_active` | Lists vehicles currently operating or reporting data. | No |
 | `vehicles_list_without_signal` | Identifies vehicles that have not reported data within a defined period. | No |
 | `vehicles_get_status` | Returns the current operational status of a specific vehicle. | No |
 | `vehicles_get_last_position` | Provides the latest reported geographic position and telemetry data. | No |
 | `vehicles_list_expected_not_operating` | Detects vehicles scheduled to operate but currently inactive. | No |
+| `vehicle_get_information` | Returns detailed information for a specific vehicle including identification, company, status, and metadata. | No |
 
 
 **Example question**
@@ -133,7 +134,8 @@ Provides insights into service performance and delays.
 | `operations_compare_real_vs_estimated_duration` | Compares actual vs scheduled trip duration. | No |
 | `operations_compare_start_time_variance` | Evaluates deviations from scheduled departure times. | No |
 | `operations_identify_high_delay_routes` | Identifies routes with the highest average delays. | No |
-
+| `operations_list_companies` | Returns the list of available operating companies. | yes |
+| `operations_resolve_company_code` | Resolves a company name or code into the internal company code used by the system. | yes |
 ---
 
 **Example question**
