@@ -40,7 +40,7 @@ class DatabusClient:
     
     async def get_feed(self, path: str) -> Any:
         path = path.strip("/")
-        url = f"{self.base_url}feed/{path}"
+        url = f"{self.base_url}feed/realtime/{path}.json"
         return await self._get_json(url)
 
 

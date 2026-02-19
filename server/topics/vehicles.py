@@ -40,7 +40,7 @@ async def get_vehicles_list_by_company(
         await ctx.info(f"company_code: {company_code}")
         await ctx.info(f"vehicle companies: {[v.get('company', '') for v in vehicles]}")
     
-    # Filter vehicles by company
+    # TODO: Normalize vehicle ID input (e.g., remove spaces, uppercase) and handle common variations
     filtered_vehicles = [
         v for v in vehicles
         if normalize_text(v.get("company", "")) == normalize_text(company_code)
@@ -71,6 +71,76 @@ async def get_vehicles_list_by_company(
         "total_vehicles": len(filtered_vehicles),
         "vehicles": vehicles_list
     }
+@mcp.tool(
+    name="vehicle_info",
+    description="Get detailed information about a specific vehicle by its ID.",
+    tags={"fleet", "vehicles", "read-only"},
+    annotations=ToolAnnotations(readOnlyHint=True),
+    meta={"version": "1.0"},
+)
+async def get_vehicle_info(
+    vehicle_input: str,
+    ctx: Context | None = None) -> dict:
+    client = get_client()
+    
+    # TODO: Normalize vehicle ID input (e.g., remove spaces, uppercase) and handle common variations
+    vehicle_id = vehicle_input.strip()
+    if ctx:
+        await ctx.info(f"Fetching information for vehicle ID: {vehicle_id}"
+                       )
+    vehicle = await client.get_api(f"vehicle/{vehicle_id}")
+    
+    if not vehicle:
+        return {"error": "Vehicle not found",
+                "vehicle_id": vehicle_id}
+    
+    # Normalize status
+    vehicle.update({"status": vehicle.get("status") or "UNKNOWN"})
+    
+    # Agregar información no incluida directamente en vehicles, si no en run, operator, etc
+    return vehicle
+    
+# Get vehicle occupancy
+@mcp.tool(
+    name="vehicle_occupancy",
+    description="Get current occupancy information for a specific vehicle by its ID.",
+    tags={"fleet", "vehicles", "read-only"},
+    annotations=ToolAnnotations(readOnlyHint=True),
+    meta={"version": "1.0"},
+)
+async def get_vehicle_occupancy(
+    vehicle_input: str,
+    ctx: Context | None = None) -> dict:
+    client = get_client()
+    
+    # TODO: Normalize vehicle ID input (e.g., remove spaces, uppercase) and handle common variations
+    vehicle_id = vehicle_input.strip()
+    if ctx:
+        await ctx.info(f"Fetching occupancy for vehicle ID: {vehicle_id}")
+    
+    feed = await client.get_feed("vehicle_positions")
+    
+    if not feed or "entity" not in feed:
+        return {"error": "Vehicle positions feed not available"}
+    
+    for entity in feed["entity"]:
+        vehicle_data = entity.get("vehicle", {})
+        vehicle_info = vehicle_data.get("vehicle", {})
+        
+        if vehicle_info.get("id") == vehicle_id:
+            return {
+                "vehicle_id": vehicle_id,
+                "occupancy_status": vehicle_data.get("occupancy_status", "unknown"),
+                "occupancy_percentage": vehicle_data.get("occupancy_percentage", "unknown"),
+                "timestamp": vehicle_data.get("timestamp", "unknown"),
+            }
+    return {
+        "error": "Vehicle not found in positions feed",
+        "vehicle_id": vehicle_id
+    }
+
+
+
 
 if __name__ == "__main__":
     mcp.run()

@@ -1,6 +1,8 @@
 
+from curses import wrapper
 from utils.databus_client import DatabusClient, get_client
 from unidecode import unidecode
+
 
 # Helpers
 def filter_by_field(items: list[dict], field: str, value: str) -> list[dict]:
@@ -14,7 +16,8 @@ def format_timestamp(ts: int | None) -> str:
     from datetime import datetime
     return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
 
-
 def normalize_text(text: str) -> str:
     """ Normalize text by removing accents and converting to lowercase. """
     return unidecode(text.strip().lower())
+
+#TODO: Add Fuzz matching with rapidfuzz
