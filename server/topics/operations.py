@@ -148,8 +148,7 @@ async def get_all_routes(
             await ctx.error(f"Error fetching all routes: {str(e)}")
         return {"error": str(e)}
 
-if __name__ == "__main__":
-    mcp.run()
+
     
 @mcp.tool(
     name="resolve_company_code",
@@ -831,3 +830,5 @@ async def get_trips_by_route(
         return {"error": str(e), "route_id": route_id}
     
 
+if __name__ == "__main__":
+    mcp.run()

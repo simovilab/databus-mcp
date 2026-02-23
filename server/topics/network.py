@@ -315,3 +315,5 @@ async def get_complete_runs_by_day_and_operator(
             await ctx.error(f"Error fetching completed runs: {str(e)}")
         return {"error": str(e), "operator_input": operator_input}
  
+if __name__ == "__main__":
+    mcp.run()
