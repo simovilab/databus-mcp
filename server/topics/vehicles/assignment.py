@@ -189,7 +189,10 @@ async def get_vehicle_full_info(vehicle_input: str, ctx: Context | None = None) 
             for entity in feed["entity"]:
                 vehicle_data = entity.get("vehicle", {})
                 vehicle_info = vehicle_data.get("vehicle", {})
-                if vehicle_info.get("license_plate") == vehicle_id:
+                if (
+                    vehicle_info.get("license_plate") == vehicle_id
+                    or vehicle_info.get("id") == vehicle_id
+                ):
                     position = vehicle_data.get("position", {})
                     vehicle_realtime = {
                         "latitude": position.get("latitude", "unknown"),
