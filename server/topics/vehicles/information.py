@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 from . import mcp
-from fastmcp import  Context
+from fastmcp import Context
 from mcp.types import ToolAnnotations
 
 from topics.operations import resolve_company_code
@@ -175,6 +175,10 @@ async def get_used_vehicles_by_route(
                     run.get("route_id") == route_input
                     and run.get("run_status") == "COMPLETED"
                 ):
+                    url = run.get("url", "unknown")
+                    parsed = urlparse(url)
+                    path_parts = parsed.path.rstrip("/").split("/")
+                    run_id = path_parts[-1]
                     used_vehicles.append(
                         {
                             "vehicle_id": run.get("vehicle", "unknown"),
@@ -182,6 +186,7 @@ async def get_used_vehicles_by_route(
                             "start_time": run.get("start_time", "unknown"),
                             "start_date": run.get("start_date", "unknown"),
                             "trip_id": run.get("trip_id", "unknown"),
+                            "run_id": run_id,
                         }
                     )
 
@@ -306,7 +311,12 @@ async def get_vehicle_last_operator(
                             last_run = run
 
             if last_run:
+                url = last_run.get("url", "unknown")
+                parsed = urlparse(url)
+                path_parts = parsed.path.rstrip("/").split("/")
+                run_id = path_parts[-1]
                 return {
+                    "run_id": run_id,
                     "vehicle_id": last_run.get("vehicle", "unknown"),
                     "last_operator": last_run.get("operator", "unknown"),
                     "run_status": last_run.get("run_status", "unknown"),

@@ -43,9 +43,15 @@ async def get_vehicle_occupancy(vehicle_input: str, ctx: Context | None = None) 
             vehicle_data = entity.get("vehicle", {})
             vehicle_info = vehicle_data.get("vehicle", {})
 
-            if vehicle_info.get("license_plate") == vehicle_id:
+            if (
+                vehicle_info.get("license_plate") == vehicle_id
+                or vehicle_info.get("id") == vehicle_id
+            ):
                 return {
-                    "vehicle_id": vehicle_id,
+                    "vehicle_id": vehicle_data.get("vehicle", {}).get("id", "unknown"),
+                    "vehicle_license_plate": vehicle_data.get("vehicle", {}).get(
+                        "license_plate", "unknown"
+                    ),
                     "occupancy_status": vehicle_data.get("occupancy_status", "unknown"),
                     "occupancy_percentage": vehicle_data.get(
                         "occupancy_percentage", "unknown"
@@ -97,10 +103,16 @@ async def get_vehicle_position(vehicle_input: str, ctx: Context | None = None) -
             vehicle_data = entity.get("vehicle", {})
             vehicle_info = vehicle_data.get("vehicle", {})
             position = vehicle_data.get("position", {})
-            if vehicle_info.get("license_plate") == vehicle_id:
+            if (
+                vehicle_info.get("license_plate") == vehicle_id
+                or vehicle_info.get("id") == vehicle_id
+            ):
 
                 return {
-                    "vehicle_id": vehicle_id,
+                    "vehicle_id": vehicle_data.get("vehicle", {}).get("id", "unknown"),
+                    "vehicle_license_plate": vehicle_data.get("vehicle", {}).get(
+                        "license_plate", "unknown"
+                    ),
                     "latitude": position.get("latitude", "unknown"),
                     "longitude": position.get("longitude", "unknown"),
                     "speed_km": position.get("speed", "unknown"),
