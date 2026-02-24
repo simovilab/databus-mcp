@@ -163,6 +163,42 @@
         }
     },
     {
+    "model": "feed.vehicle",
+    "pk": "unit-22",
+    "fields": {
+        "company": "OSG",
+        "label": "Unit 22",
+        "license_plate": "DEF-022",
+        "wheelchair_accessible": "WHEELCHAIR_ACCESIBLE",
+        "wifi": "AVAILABLE",
+        "air_conditioning": "AVAILABLE",
+        "mobile_charging": "AVAILABLE",
+        "bike_rack": "AVAILABLE",
+        "has_screen": true,
+        "has_headsign_screen": true,
+        "has_audio": true,
+        "status": "IN_SERVICE"
+    }
+    },
+    {
+        "model": "feed.vehicle",
+        "pk": "unit-10",
+        "fields": {
+            "company": "OSG",
+            "label": "Unit 10",
+            "license_plate": "ABC-010",
+            "wheelchair_accessible": "WHEELCHAIR_ACCESIBLE",
+            "wifi": "AVAILABLE",
+            "air_conditioning": "AVAILABLE",
+            "mobile_charging": "AVAILABLE",
+            "bike_rack": "AVAILABLE",
+            "has_screen": true,
+            "has_headsign_screen": true,
+            "has_audio": true,
+            "status": "IN_SERVICE"
+        }
+    },
+    {
         "model": "feed.equipment",
         "pk": "16736b9e-43d6-49f0-a269-6f71573d7730",
         "fields": {
@@ -412,6 +448,38 @@
             "start_time": "12:35:00",
             "schedule_relationship": "SCHEDULED",
             "run_status": "COMPLETED"
+        }
+    },
+    {
+    "model": "feed.run",
+    "pk": 8,
+    "fields": {
+        "vehicle": "unit-22",
+        "operator": "1-1234-5678",
+        "route_id": "bUCR_L1",
+        "trip_id": "TRIP-ART-11",
+        "direction_id": 0,
+        "shape_id": "art_shape",
+        "start_date": "2026-02-24",
+        "start_time": "07:15:00",
+        "schedule_relationship": "ADDED",
+        "run_status": "IN_PROGRESS"
+        }
+    },
+    {
+        "model": "feed.run",
+        "pk": 9,
+        "fields": {
+            "vehicle": "unit-10",
+            "operator": "2-1234-5678",
+            "route_id": "bUCR_L2",
+            "trip_id": "TRIP-EDU-01",
+            "direction_id": 0,
+            "shape_id": "edu_shape",
+            "start_date": "2026-02-24",
+            "start_time": "06:45:00",
+            "schedule_relationship": "SCHEDULED",
+            "run_status": "IN_PROGRESS"
         }
     },
     {

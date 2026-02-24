@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 
 from . import mcp
-from fastmcp import FastMCP, Context
+from fastmcp import Context
 from mcp.types import ToolAnnotations
 
 from utils.common import format_timestamp
