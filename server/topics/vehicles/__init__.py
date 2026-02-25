@@ -4,4 +4,4 @@ mcp = FastMCP("vehicles")
 
 from .information import *     
 from .realtime import *  
-from .assignment import *
+from .assignments import *
